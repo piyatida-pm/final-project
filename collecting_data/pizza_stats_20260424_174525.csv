@@ -1,0 +1,6 @@
+Day,OrderID,ItemPrice,ToppingsUsed,DrinkType,OrderAccuracy,TimeTaken
+1,1,20,1,Water,Correct,24
+1,2,50,1,Milkshake,Correct,24
+1,3,50,1,Sprite,Correct,44
+1,4,130,3,Milkshake,Correct,57
+1,5,70,2,Sprite,Correct,52
