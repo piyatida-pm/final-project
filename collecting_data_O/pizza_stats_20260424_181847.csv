@@ -1,3 +1,0 @@
-Day,OrderID,ItemPrice,ToppingsUsed,DrinkType,OrderAccuracy,TimeTaken
-1,1,130,3,Coke,Correct,54
-1,2,125,2,Milkshake,Correct,60
