@@ -44,7 +44,8 @@ class Game:
         pygame.display.set_caption("Little Pizza House")
         self.clock = pygame.time.Clock()
         self.running = True
-        self.game_state = "playing"  # playing, pause, upgrade, game_over
+        self.game_state = "playing"  # playing, upgrade, stats
+        self.prev_game_state = "playing"
         
         # Game objects
         self.restaurant = library.Restaurant()
@@ -72,18 +73,20 @@ class Game:
         self.sound_enabled = True  # Track sound on/off state
         
         # CSV file for stats - save to collecting_data folder
-        data_folder = os.path.join(os.path.dirname(__file__), "collecting_data")
-        if not os.path.exists(data_folder):
-            os.makedirs(data_folder)
-        self.csv_filename = os.path.join(data_folder, f"pizza_stats_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv")
+        self.data_folder = os.path.join(os.path.dirname(__file__), "collecting_data")
+        if not os.path.exists(self.data_folder):
+            os.makedirs(self.data_folder)
+        self.csv_filename = os.path.join(self.data_folder, f"pizza_stats_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv")
+        self.cached_stats = None
+        self.stats_tab = 0
         self.init_csv()
-        
+
     def init_csv(self):
         """Initialize CSV file for data recording"""
         with open(self.csv_filename, 'w', newline='') as f:
             writer = csv.writer(f)
             writer.writerow(['Day', 'OrderID', 'ItemPrice', 'ToppingsUsed', 'DrinkType', 'OrderAccuracy', 'TimeTaken'])
-    
+
     def cleanup_empty_csv(self):
         """Delete CSV file if it only contains the header and no data"""
         try:
@@ -221,6 +224,9 @@ class Game:
     def check_order(self):
         """Check if player's order matches customer's order and process it"""
         if not self.is_order_correct():
+            # Record incorrect attempt to CSV
+            self.orders_failed += 1
+            self._record_accuracy("Incorrect")
             return False
         
         # Play order submission sound
@@ -234,6 +240,7 @@ class Game:
         
         # Record to CSV
         self.record_order_stats(self.player_pizza.pizza_price)
+        self._record_accuracy("Correct")
         
         # Reset for next customer
         self.player_pizza = None
@@ -242,9 +249,26 @@ class Game:
         self.next_customer()
         return True
     
+    def _record_accuracy(self, result):
+        """Append a row recording only the accuracy outcome for this submission."""
+        topping_names = ";".join(t.name for t in self.player_pizza.pizza_lst) if self.player_pizza else ""
+        drink_type    = self.player_drink.name if self.player_drink else "None"
+        price         = self.player_pizza.pizza_price if self.player_pizza else 0
+        with open(self.csv_filename, 'a', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow([
+                self.day,
+                self.orders_completed + self.orders_failed,
+                price,
+                topping_names,
+                drink_type,
+                result,
+                random.randint(10, 60)
+            ])
+
     def record_order_stats(self, price):
         """Record order statistics to CSV"""
-        toppings_count = len(self.player_pizza.pizza_lst) if self.player_pizza else 0
+        topping_names = ";".join(t.name for t in self.player_pizza.pizza_lst) if self.player_pizza else ""
         drink_type = self.player_drink.name if self.player_drink else "None"
         
         with open(self.csv_filename, 'a', newline='') as f:
@@ -253,12 +277,127 @@ class Game:
                 self.day,
                 self.orders_completed + self.orders_failed,
                 price,
-                toppings_count,
+                topping_names,
                 drink_type,
                 "Correct",
                 random.randint(10, 60)  # Placeholder for time taken
             ])
     
+    def load_all_stats(self):
+        """Read all CSV files in collecting_data and return aggregated stats."""
+        drink_counts   = {}
+        topping_counts = {}
+        accuracy_counts = {}
+        prices    = []
+        order_ids = []
+        times     = []
+        global_id = 0
+        try:
+            for fname in sorted(os.listdir(self.data_folder)):
+                if fname.endswith('.csv'):
+                    fpath = os.path.join(self.data_folder, fname)
+                    with open(fpath, 'r', newline='') as f:
+                        for row in csv.DictReader(f):
+                            global_id += 1
+                            drink = row.get('DrinkType', 'Unknown')
+                            drink_counts[drink] = drink_counts.get(drink, 0) + 1
+                            try:
+                                raw = row.get('ToppingsUsed', '')
+                                for name in raw.split(';'):
+                                    name = name.strip()
+                                    if name and not name.isdigit():
+                                        topping_counts[name] = topping_counts.get(name, 0) + 1
+                            except (ValueError, KeyError):
+                                pass
+                            try:
+                                prices.append(float(row['ItemPrice']))
+                                order_ids.append(global_id)
+                            except (ValueError, KeyError):
+                                pass
+                            try:
+                                times.append(int(row['TimeTaken']))
+                            except (ValueError, KeyError):
+                                pass
+                            accuracy = row.get('OrderAccuracy', '').strip()
+                            if accuracy:
+                                accuracy_counts[accuracy] = accuracy_counts.get(accuracy, 0) + 1
+        except OSError:
+            pass
+
+        # ── Per-tab summary tables ─────────────────────────────────────────
+        total = global_id or 1
+
+        # Tab 0 — Drinks: rows = (Drink, Count, %)
+        drink_table = [
+            ("Drink", "Orders", "Share %")
+        ] + [
+            (name, str(cnt), f"{cnt / total * 100:.1f}%")
+            for name, cnt in sorted(drink_counts.items(), key=lambda x: -x[1])
+        ]
+
+        # Tab 1 — Toppings: rows = (Topping, Orders, %)
+        topping_total = sum(topping_counts.values()) or 1
+        topping_table = [
+            ("Topping", "Orders", "Share %")
+        ] + [
+            (name, str(cnt), f"{cnt / topping_total * 100:.1f}%")
+            for name, cnt in sorted(topping_counts.items(), key=lambda x: -x[1])
+        ]
+
+        # Tab 2 — Price: summary statistics
+        if prices:
+            avg_p  = sum(prices) / len(prices)
+            price_table = [
+                ("Statistic", "Value"),
+                ("Orders recorded",  str(len(prices))),
+                ("Min price",        f"${min(prices):.2f}"),
+                ("Max price",        f"${max(prices):.2f}"),
+                ("Mean price",       f"${avg_p:.2f}"),
+                ("Total revenue",    f"${sum(prices):.2f}"),
+            ]
+        else:
+            price_table = [("Statistic", "Value")]
+
+        # Tab 3 — Time: summary statistics
+        if times:
+            avg_t  = sum(times) / len(times)
+            sorted_t = sorted(times)
+            median_t = sorted_t[len(sorted_t) // 2]
+            time_table = [
+                ("Statistic", "Value"),
+                ("Orders recorded", str(len(times))),
+                ("Min time",        f"{min(times)}s"),
+                ("Max time",        f"{max(times)}s"),
+                ("Mean time",       f"{avg_t:.1f}s"),
+                ("Median time",     f"{median_t}s"),
+            ]
+        else:
+            time_table = [("Statistic", "Value")]
+
+        # Tab 4 — Accuracy: pie chart data
+        acc_total = sum(accuracy_counts.values()) or 1
+        accuracy_table = [
+            ("Result", "Count", "Share %")
+        ] + [
+            (name, str(cnt), f"{cnt / acc_total * 100:.1f}%")
+            for name, cnt in sorted(accuracy_counts.items(), key=lambda x: -x[1])
+        ]
+
+        return {
+            'drink_counts':   drink_counts,
+            'topping_counts': topping_counts,
+            'prices':         prices,
+            'order_ids':      order_ids,
+            'times':          times,
+            'total_orders':   global_id,
+            'drink_table':    drink_table,
+            'topping_table':  topping_table,
+            'price_table':    price_table,
+            'time_table':     time_table,
+            'accuracy_counts': accuracy_counts,
+            'accuracy_table':  accuracy_table,
+        }
+
     def handle_events(self):
         """Handle pygame events"""
         for event in pygame.event.get():
@@ -276,11 +415,41 @@ class Game:
                 # Submit order
                 if event.key == pygame.K_RETURN:
                     self.check_order()
-            
+
+                # Toggle stats screen
+                if event.key == pygame.K_m:
+                    if self.game_state == "stats":
+                        self.game_state = self.prev_game_state
+                    else:
+                        self.prev_game_state = self.game_state
+                        self.game_state = "stats"
+                        self.cached_stats = self.load_all_stats()
+
+                # Tab navigation for stats screen
+                if self.game_state == "stats":
+                    if event.key in (pygame.K_TAB, pygame.K_RIGHT):
+                        self.stats_tab = (self.stats_tab + 1) % 5
+                    elif event.key == pygame.K_LEFT:
+                        self.stats_tab = (self.stats_tab - 1) % 5
+
             # Mouse click handling
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_x, mouse_y = event.pos
-                
+
+                # Stats screen tab clicks
+                if self.game_state == "stats":
+                    tab_w = (SCREEN_WIDTH - 32) // 5
+                    if 62 <= mouse_y <= 98:
+                        for i in range(5):
+                            tx = 16 + i * tab_w
+                            if tx <= mouse_x <= tx + tab_w - 4:
+                                self.stats_tab = i
+                                break
+
+                # Gameplay clicks only fire when stats screen is not open
+                if self.game_state == "stats":
+                    continue
+
                 # Check topping button clicks (center, 3 per row, 2 rows)
                 topping_x_start = SCREEN_WIDTH//2 - 90
                 topping_y_start = SCREEN_HEIGHT//2 + 80
@@ -387,15 +556,20 @@ class Game:
         """Draw game"""
         self.screen.fill(CREAM)
         
+        mouse_pos = pygame.mouse.get_pos()
+        
         # Draw background
         draw.draw_kitchen_background(self.screen)
         
         # Draw restaurant state
         draw.draw_stats(self.screen, self.restaurant.money, self.orders_completed, self.day)
         
-        if self.game_state == "upgrade":
+        # Use the underlying state when the stats overlay is active
+        base_state = self.prev_game_state if self.game_state == "stats" else self.game_state
+
+        if base_state == "upgrade":
             # Draw upgrade screen
-            draw.draw_upgrade_screen(self.screen, self.restaurant, self.restaurant.money)
+            draw.draw_upgrade_screen(self.screen, self.restaurant, self.restaurant.money, mouse_pos)
         else:
             # Draw current order
             if self.current_order:
@@ -410,18 +584,22 @@ class Game:
                 draw.draw_player_pizza(self.screen, self.player_pizza, self.player_drink)
             
             # Draw topping and drink options
-            draw.draw_topping_options(self.screen, self.restaurant.topping_lst)
-            draw.draw_drink_options(self.screen, self.restaurant.drinks_lst)
+            draw.draw_topping_options(self.screen, self.restaurant.topping_lst, mouse_pos)
+            draw.draw_drink_options(self.screen, self.restaurant.drinks_lst, mouse_pos)
             
             # Draw hint text
             draw.draw_hint_text(self.screen)
         
         # Draw instructions
-        draw.draw_controls(self.screen)
+        draw.draw_controls(self.screen, mouse_pos)
         
         # Draw sound toggle button
-        draw.draw_sound_toggle_button(self.screen, self.sound_enabled)
-        
+        draw.draw_sound_toggle_button(self.screen, self.sound_enabled, mouse_pos)
+
+        # Stats overlay (drawn on top of everything)
+        if self.game_state == "stats" and self.cached_stats is not None:
+            draw.draw_stats_screen(self.screen, self.cached_stats, self.stats_tab, mouse_pos)
+
         pygame.display.flip()
     
     def run(self):

@@ -1,0 +1,61 @@
+Day,OrderID,ItemPrice,ToppingsUsed,DrinkType,OrderAccuracy,TimeTaken
+1,1,85,Mushroom;Pineapple,Sprite,Correct,15
+1,2,30,Pepperoni;Cheese,Coke,Correct,35
+1,3,85,Pesto Sauce;Mushroom;Pepperoni,Sprite,Correct,53
+1,4,55,Mushroom;Pepperoni,Coke,Correct,42
+1,5,20,Cheese,Milkshake,Correct,29
+1,6,85,Cheese;Mushroom;Pesto Sauce,Coke,Correct,57
+1,7,60,Bacon;Pepperoni,Water,Correct,64
+1,8,80,Bacon;Pesto Sauce,Sprite,Correct,43
+1,9,60,Pineapple;Cheese,Sprite,Correct,60
+1,10,90,Pesto Sauce;Cheese;Bacon,Coke,Correct,20
+1,11,85,Bacon;Mushroom,Water,Correct,64
+1,12,95,Cheese;Mushroom;Pineapple,Water,Correct,27
+1,13,75,Mushroom;Pesto Sauce,Water,Correct,58
+1,14,95,Pepperoni;Mushroom;Pineapple,Coke,Correct,38
+1,15,55,Cheese;Mushroom,Sprite,Correct,20
+1,16,60,Cheese;Pineapple,Sprite,Correct,18
+1,17,95,Mushroom;Pepperoni;Pineapple,Sprite,Correct,39
+1,18,95,Mushroom;Pineapple;Cheese,Milkshake,Correct,39
+1,19,120,Bacon;Pesto Sauce;Pineapple,Coke,Correct,43
+1,20,20,Cheese,Sprite,Correct,48
+1,21,50,Pineapple,Sprite,Correct,56
+1,22,80,Pesto Sauce;Pineapple,Milkshake,Correct,15
+1,23,90,Pepperoni;Pineapple;Pesto Sauce,Coke,Correct,10
+1,24,50,Bacon,Coke,Correct,25
+1,25,60,Bacon;Cheese,Coke,Correct,27
+2,26,60,Cheese;Pineapple,Coke,Correct,51
+2,27,60,Bacon;Cheese,Water,Correct,63
+2,28,90,Pineapple;Bacon,Water,Correct,20
+2,29,60,Pepperoni;Bacon,Sprite,Correct,41
+2,30,40,Pesto Sauce,Milkshake,Correct,38
+2,31,40,Pesto Sauce,Sprite,Correct,58
+2,32,20,Pepperoni,Sprite,Correct,31
+2,33,50,Pesto Sauce;Pepperoni,Water,Correct,28
+2,34,90,Cheese;Bacon;Pesto Sauce,Milkshake,Correct,62
+2,35,50,Bacon,Sprite,Correct,44
+2,36,50,Bacon,Milkshake,Correct,62
+2,37,50,Bacon,Milkshake,Correct,61
+2,38,70,Bacon;Pepperoni;Cheese,Coke,Correct,23
+2,39,20,Pepperoni,Milkshake,Correct,8
+2,40,75,Pesto Sauce;Mushroom,Coke,Correct,9
+2,41,85,Mushroom;Pineapple,Water,Correct,37
+2,42,90,Pesto Sauce;Bacon;Pepperoni,Milkshake,Correct,37
+2,43,50,Pineapple,Milkshake,Correct,14
+2,44,65,Cheese;Mushroom;Pepperoni,Water,Correct,64
+2,45,40,Pesto Sauce,Coke,Correct,17
+2,46,60,Pepperoni;Pineapple,Coke,Correct,35
+2,47,90,Pepperoni;Pesto Sauce;Pineapple,Water,Correct,39
+2,48,20,Cheese,Milkshake,Correct,29
+2,49,40,Pesto Sauce,Coke,Correct,30
+2,50,85,Mushroom;Pineapple,Milkshake,Correct,20
+3,51,80,Bacon;Pesto Sauce,Water,Correct,32
+3,52,20,Cheese,Sprite,Correct,61
+3,53,80,Bacon;Pesto Sauce,Milkshake,Correct,20
+3,54,20,Cheese,Water,Correct,10
+3,55,70,Pepperoni;Pineapple;Cheese,Coke,Correct,28
+3,56,75,Pesto Sauce;Mushroom,Water,Correct,55
+3,57,55,Mushroom;Pepperoni,Sprite,Correct,21
+3,58,55,Mushroom;Cheese,Sprite,Correct,47
+3,59,95,Mushroom;Cheese;Pineapple,Sprite,Correct,16
+3,60,70,Pineapple;Pepperoni;Cheese,Sprite,Correct,64

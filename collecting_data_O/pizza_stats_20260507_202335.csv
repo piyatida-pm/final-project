@@ -1,0 +1,4 @@
+Day,OrderID,ItemPrice,ToppingsUsed,DrinkType,OrderAccuracy,TimeTaken
+1,1,60,2,Sprite,Correct,42
+1,2,50,1,Sprite,Correct,13
+1,3,65,2,Coke,Correct,29

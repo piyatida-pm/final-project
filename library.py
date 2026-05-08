@@ -52,7 +52,7 @@ class Pizza:
             return False
 
 class Order:
-    possible_name = ["Kendo","Jimmy","Shu","Momo"]
+    possible_name = ["Kendo","Jimmy","Shu","Momo","Oliver", "Theodore", "Arthur", "Felix", "Asher", "Eleanor", "Aurora", "Stella", "Chloe", "Luna", "Rowan", "Quinn", "Avery", "Morgan", "Nova", "Eden"]
     def __init__(self):
         self.lst_order = []
         # populate order - do when start pygame
