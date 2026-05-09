@@ -1,0 +1,3 @@
+Day,OrderID,ItemPrice,ToppingsUsed,DrinkType,OrderAccuracy,TimeTaken
+1,1,80,Pesto Sauce;Cheese,Coke,Correct,42
+1,1,80,Pesto Sauce;Cheese,Coke,Correct,27

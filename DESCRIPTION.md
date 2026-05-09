@@ -24,6 +24,16 @@
   - Upgrade drink
   - Check in-game statistic
 
+- **Screenshots:**
+![Game](./game.png "Game play")
+![Drink](./Drink_graph.png "Drink Graph")
+![Topping](./Topping_graph.png "Topping Graph")
+![Price](./Price_graph.png "Price Graph")
+![Time](./Time_graph.png "Time Graph")
+![Accuracy](./Accuracy_graph.png "Accuracy Graph")
+
+- **Proposal:**
+[LIttlePizzaHouse_Proposal](/LIttlePizzaHouse_Proposal.pdf)
 ---
 
 ## 2. Concept

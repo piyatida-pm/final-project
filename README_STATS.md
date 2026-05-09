@@ -1,12 +1,12 @@
-# 📊 Statistics Visualizer - COMPLETE
+# Statistics Visualizer - COMPLETE
 
-## ✅ IMPLEMENTATION STATUS: DONE
+## IMPLEMENTATION STATUS: DONE
 
 Your in-game statistics visualizer is **fully implemented** and ready to use!
 
 ---
 
-## 🎯 What Was Built
+## What Was Built
 
 ### The Stats Button
 ![stats-button-location]
@@ -22,14 +22,14 @@ A comprehensive dashboard showing:
 ┃ GAME STATISTICS                                  ╳     ┃
 ┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
 ┃                                                        ┃
-┃ 📊 KEY METRICS              📅 DAILY PERFORMANCE      ┃
+┃ KEY METRICS              DAILY PERFORMANCE      ┃
 ┃ • Total Orders: N            • Day 1: X orders         ┃
 ┃ • Revenue: $XXX              • Day 2: X orders         ┃
 ┃ • Avg Price: $XX             • Day 3: X orders         ┃
 ┃ • Accuracy: X%                                        ┃
-┃ • Time: Min/Max/Avg          🍕 TOPPINGS               ┃
+┃ • Time: Min/Max/Avg          TOPPINGS               ┃
 ┃                              • Total Used: N          ┃
-┃ 🥤 DRINK FREQUENCY                                    ┃
+┃ DRINK FREQUENCY                                    ┃
 ┃ ■■■ Water: 4                                          ┃
 ┃ ■■ Coke: 3                                            ┃
 ┃ ■■ Milkshake: 3                                       ┃
@@ -41,19 +41,19 @@ A comprehensive dashboard showing:
 
 ---
 
-## 📁 Files Created & Modified
+## Files Created & Modified
 
 | File | Change | Status |
 |------|--------|--------|
-| `stats_analyzer.py` | ✨ NEW | Complete analysis engine |
-| `main.py` | 🔧 MODIFIED | Game integration |
-| `draw.py` | 🔧 MODIFIED | Visualization functions |
-| `STATS_IMPLEMENTATION.md` | 📝 NEW | Technical documentation |
-| `STATS_QUICK_START.md` | 📝 NEW | User guide |
+| `stats_analyzer.py` |  NEW | Complete analysis engine |
+| `main.py` |  MODIFIED | Game integration |
+| `draw.py` |  MODIFIED | Visualization functions |
+| `STATS_IMPLEMENTATION.md` |  NEW | Technical documentation |
+| `STATS_QUICK_START.md` |  NEW | User guide |
 
 ---
 
-## 🎮 How to Use
+## How to Use
 
 ### During Gameplay:
 ```
@@ -65,18 +65,18 @@ A comprehensive dashboard showing:
 ```
 
 ### Statistics Displayed:
-- ✅ Total orders completed
-- ✅ Total money earned
-- ✅ Average earnings per order
-- ✅ Order accuracy percentage
-- ✅ Time taken per order (min/max/avg)
-- ✅ Most popular drinks
-- ✅ Topping usage statistics
-- ✅ Daily performance breakdown
+- Total orders completed
+- Total money earned
+- Average earnings per order
+- Order accuracy percentage
+- Time taken per order (min/max/avg)
+- Most popular drinks
+- Topping usage statistics
+- Daily performance breakdown
 
 ---
 
-## 🧪 Verification Results
+## Verification Results
 
 ```
 ✓ All 4 modules import successfully
@@ -92,21 +92,21 @@ A comprehensive dashboard showing:
 
 ---
 
-## 📊 Statistics Features from Proposal
+## Statistics Features from Proposal
 
 | Feature | Implementation | Status |
 |---------|-----------------|--------|
-| Amount of Money per Menu | Total & Average Revenue | ✅ |
-| Time Taken Each Order | Min/Max/Avg Statistics | ✅ |
-| Number of Toppings Used | Topping Statistics | ✅ |
-| Order Delivery Accuracy | Accuracy Percentage | ✅ |
-| Number of Drinks | Drink Frequency Chart | ✅ |
+| Amount of Money per Menu | Total & Average Revenue | Complete |
+| Time Taken Each Order | Min/Max/Avg Statistics | Complete |
+| Number of Toppings Used | Topping Statistics | Complete |
+| Order Delivery Accuracy | Accuracy Percentage | Complete |
+| Number of Drinks | Drink Frequency Chart | Complete |
 
 **All 5 proposal features implemented!**
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### To Run the Game:
 ```bash
@@ -121,14 +121,14 @@ python3 main.py
 4. Close popup with X or ESC
 
 ### No Additional Setup Required!
-- ✅ No new dependencies
-- ✅ Uses existing pygame setup
-- ✅ Reads from existing CSV files
-- ✅ Works immediately
+- No new dependencies
+- Uses existing pygame setup
+- Reads from existing CSV files
+- Works immediately
 
 ---
 
-## 📈 What You Can Track
+## What You Can Track
 
 ### Performance Metrics:
 - How many orders you complete per day
@@ -145,7 +145,7 @@ python3 main.py
 
 ---
 
-## 💡 Pro Tips
+## Pro Tips
 
 - **Open stats during gameplay** - see real-time data
 - **Check daily summary** - identify your best/worst days
@@ -155,7 +155,7 @@ python3 main.py
 
 ---
 
-## 🎓 How It Works (Technical)
+## How It Works (Technical)
 
 ```
 Game Running
@@ -177,7 +177,7 @@ Back to playing
 
 ---
 
-## ✨ Key Features
+## Key Features
 
 ### User-Friendly
 - Intuitive button placement
@@ -201,7 +201,7 @@ Back to playing
 
 ---
 
-## 📞 Support
+## Support
 
 If you have questions:
 1. Check `STATS_QUICK_START.md` for user guide
@@ -211,7 +211,7 @@ If you have questions:
 
 ---
 
-## 🎉 You're All Set!
+## You're All Set!
 
 The statistics visualizer is **ready to use**. Just run the game and click the Stats button to start tracking your performance!
 
@@ -219,7 +219,7 @@ The statistics visualizer is **ready to use**. Just run the game and click the S
 python3 main.py
 ```
 
-**Enjoy tracking your pizza empire! 🍕📊**
+**Enjoy tracking your pizza empire! **
 
 ---
 
